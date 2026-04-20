@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liudmila Tsvirko — IT Recruiter & HR</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0e;
+    --surface: #16161a;
+    --surface-alt: #1e1e24;
+    --text: #ececf0;
+    --text-muted: #8b8b9e;
+    --accent: #e8c872;
+    --accent-dim: rgba(232, 200, 114, 0.12);
+    --accent2: #72c4e8;
+    --border: #2a2a34;
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ---- NOISE OVERLAY ---- */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ---- GLOW BLOB ---- */
+  .glow {
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,200,114,0.06) 0%, transparent 70%);
+    top: -100px; right: -200px;
+    pointer-events: none;
+    animation: float 12s ease-in-out infinite;
+  }
+  .glow-2 {
+    background: radial-gradient(circle, rgba(114,196,232,0.04) 0%, transparent 70%);
+    top: auto; bottom: -200px; right: auto; left: -200px;
+    animation-delay: -6s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, 40px) scale(1.1); }
+  }
+
+  /* ---- LAYOUT ---- */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.4rem);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--text);
+  }
+  .header h1 span {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .header .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-weight: 300;
+  }
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: right;
+  }
+  .contacts a, .contacts span {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.3s;
+  }
+  .contacts a:hover { color: var(--accent); }
+
+  /* ---- SECTIONS ---- */
+  .section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+  .section:nth-child(4) { animation-delay: 0.3s; }
+  .section:nth-child(5) { animation-delay: 0.4s; }
+  .section:nth-child(6) { animation-delay: 0.5s; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- ABOUT ---- */
+  .about-text {
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 680px;
+    font-weight: 300;
+  }
+  .about-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ---- EXPERIENCE CARD ---- */
+  .exp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .exp-card:hover {
+    border-color: rgba(232,200,114,0.3);
+    transform: translateX(4px);
+  }
+  .exp-card:hover::before { opacity: 1; }
+  .exp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .exp-role {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  .exp-company {
+    color: var(--accent2);
+    font-weight: 400;
+  }
+  .exp-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .exp-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-top: 4px;
+  }
+
+  /* ---- SKILLS GRID ---- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .skill-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .skill-item:hover {
+    background: var(--accent-dim);
+    border-color: rgba(232,200,114,0.25);
+    transform: translateY(-2px);
+  }
+  .skill-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ---- EDUCATION ---- */
+  .edu-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 20px;
+  }
+  .edu-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .edu-info h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .edu-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  /* ---- LANGUAGES ---- */
+  .lang-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .lang-chip {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 22px;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+  .lang-chip:hover {
+    border-color: var(--accent2);
+  }
+  .lang-level {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+    animation: fadeUp 0.8s ease-out 0.6s both;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 640px) {
+    .header { grid-template-columns: 1fr; gap: 20px; }
+    .contacts { text-align: left; }
+    .exp-top { flex-direction: column; gap: 4px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .page { padding: 40px 20px 80px; }
+  }
+
+  /* ---- PRINT ---- */
+  @media print {
+    body { background: #fff; color: #111; }
+    .glow, body::before { display: none; }
+    .exp-card { border: 1px solid #ddd; }
+    .section-label { color: #333; }
+    a { color: #333; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div>
+        <h1>Liudmila<br><span>Tsvirko</span></h1>
+        <div class="subtitle">IT Recruiter · HR Professional</div>
+      </div>
+      <div class="contacts">
+        <a href="mailto:filoveclv@gmail.com">filoveclv@gmail.com</a>
+        <a href="tel:+375292923438">+375 29 292 34 38</a>
+        <span>Minsk, Belarus</span>
+        <a href="https://www.linkedin.com/in/liudmila-tsvirko/" target="_blank">LinkedIn: Liudmila_Tsvirko</a>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="section">
+      <div class="section-label">About</div>
+      <p class="about-text">
+        Results-driven IT Recruiter and HR professional with <strong>5+ years of experience</strong> in full-cycle recruitment
+        for <strong>outsourced B2B software/hardware companies</strong>, <strong>game development</strong>, and <strong>iGaming</strong> industries.
+        Proven track record of closing technical and non-technical positions across all seniority levels.
+        Cross-cultural hiring experience spanning CIS countries, Poland, and the USA.
+        Skilled in sourcing strategies, HR operations, performance management, onboarding, and process automation.
+      </p>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="section">
+      <div class="section-label">Experience</div>
+
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">Sourcer / Recruiter / HR · <span class="exp-company">NDA (iGaming & GameDev)</span></div>
+          <div class="exp-date">Jun 2025 — Apr 2026</div>
+        </div>
+        <div class="exp-desc">
+          Sourced and recruited technical and non-technical talent for iGaming and game development projects.
+          Developed competitor matrices for iGaming and game dev markets.
+          Supported HR functions including performance management, onboarding & adaptation, and HR compliance.
+          Recruited for AI-focused positions.
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">IT Recruiter · <span class="exp-company">Aimers, Recruiting Agency</span></div>
+          <div class="exp-date">Jun 2024 — Apr 2025</div>
+        </div>
+        <div class="exp-desc">
+          Managed full-cycle recruitment: sourcing, CV screening, interviewing, and feedback coordination.
+          Maintained and optimized ATS database for efficient candidate pipeline management.
+          Conducted labor market research and salary benchmarking.
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">IT Recruiter / HR Generalist · <span class="exp-company">Professional Software Associates, Inc.</span></div>
+          <div class="exp-date">May 2021 — Jun 2024</div>
+        </div>
+        <div class="exp-desc">
+          End-to-end recruitment for technical and non-technical roles across seniority levels.
+          Led HR operations & compliance, created policies, procedures, and competency matrices.
+          Managed performance reviews, onboarding, exit interviews, and visa support.
+          Analyzed salary trends over 3 years; researched ATS solutions to automate recruitment.
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">Recruitment Coach · <span class="exp-company">Shirkina School</span></div>
+          <div class="exp-date">Apr 2022 — Present</div>
+        </div>
+        <div class="exp-desc">
+          Designed and delivered "Sourcing for Beginners" and "Giving Rejections" training courses.
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">Sourcer (Part-Time) · <span class="exp-company">Celeritas, Recruiting Agency</span></div>
+          <div class="exp-date">Aug 2020 — Apr 2021</div>
+        </div>
+        <div class="exp-desc">
+          Sourced candidates, screened CVs, communicated with prospects, and gathered feedback.
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">Engineer · <span class="exp-company">STC Belmicrosystems</span></div>
+          <div class="exp-date">Jan 2012 — Apr 2021</div>
+        </div>
+        <div class="exp-desc">
+          Prepared reports and operational plans for division heads and the economics department.
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section">
+      <div class="section-label">Skills</div>
+      <div class="skills-grid">
+        <div class="skill-item"><span class="skill-dot"></span>Boolean & X-Ray Search</div>
+        <div class="skill-item"><span class="skill-dot"></span>LinkedIn Recruiter</div>
+        <div class="skill-item"><span class="skill-dot"></span>AI-powered Sourcing</div>
+        <div class="skill-item"><span class="skill-dot"></span>Full-cycle Recruitment</div>
+        <div class="skill-item"><span class="skill-dot"></span>Performance Management</div>
+        <div class="skill-item"><span class="skill-dot"></span>Onboarding & Adaptation</div>
+        <div class="skill-item"><span class="skill-dot"></span>HR Operations & Compliance</div>
+        <div class="skill-item"><span class="skill-dot"></span>CRM / ATS Systems</div>
+        <div class="skill-item"><span class="skill-dot"></span>Notion / Trello / Miro</div>
+        <div class="skill-item"><span class="skill-dot"></span>Figma / Canva</div>
+        <div class="skill-item"><span class="skill-dot"></span>ChatGPT / Claude</div>
+        <div class="skill-item"><span class="skill-dot"></span>Negotiation & Empathy</div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section">
+      <div class="section-label">Education & Certifications</div>
+      <div class="edu-item">
+        <span class="edu-year">2007 — 2012</span>
+        <div class="edu-info">
+          <h3>Bachelor's Degree in Economics</h3>
+          <p>Belarusian State Technological University</p>
+        </div>
+      </div>
+      <div class="edu-item">
+        <span class="edu-year">2023</span>
+        <div class="edu-info">
+          <h3>Advanced IT Sourcing</h3>
+          <p>Yauheniya Filipovich's Course</p>
+        </div>
+      </div>
+      <div class="edu-item">
+        <span class="edu-year">2022</span>
+        <div class="edu-info">
+          <h3>Recruitment for Middle Specialists</h3>
+          <p>Shirkina School</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANGUAGES -->
+    <div class="section">
+      <div class="section-label">Languages</div>
+      <div class="lang-row">
+        <div class="lang-chip">Russian <span class="lang-level">· native</span></div>
+        <div class="lang-chip">English <span class="lang-level">· Intermediate+</span></div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      updated: april 2026
+    </div>
+
+  </div>
+</body>
+</html>
