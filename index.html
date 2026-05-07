@@ -1,498 +1,634 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liudmila Tsvirko — IT Recruiter & HR</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Людмила Цвирко — HR Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0c0c0e;
-    --surface: #16161a;
-    --surface-alt: #1e1e24;
-    --text: #ececf0;
-    --text-muted: #8b8b9e;
-    --accent: #e8c872;
-    --accent-dim: rgba(232, 200, 114, 0.12);
-    --accent2: #72c4e8;
-    --border: #2a2a34;
-    --radius: 14px;
+    --cream: #F5F0E8;
+    --dark: #1C1A17;
+    --mid: #3D3A35;
+    --accent: #B87040;
+    --accent-light: #D4956A;
+    --muted: #8A8278;
+    --line: #D9D3C7;
+    --sidebar-bg: #EDE8DF;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ---- NOISE OVERLAY ---- */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* ---- GLOW BLOB ---- */
-  .glow {
-    position: fixed;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(232,200,114,0.06) 0%, transparent 70%);
-    top: -100px; right: -200px;
-    pointer-events: none;
-    animation: float 12s ease-in-out infinite;
-  }
-  .glow-2 {
-    background: radial-gradient(circle, rgba(114,196,232,0.04) 0%, transparent 70%);
-    top: auto; bottom: -200px; right: auto; left: -200px;
-    animation-delay: -6s;
-  }
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, 40px) scale(1.1); }
-  }
-
-  /* ---- LAYOUT ---- */
-  .page {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 60px 28px 100px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ---- HEADER ---- */
-  .header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 32px;
-    align-items: end;
-    padding-bottom: 48px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 56px;
-    animation: fadeUp 0.8s ease-out;
-  }
-  .header h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.8rem, 6vw, 4.4rem);
-    line-height: 1.05;
-    letter-spacing: -1px;
-    color: var(--text);
-  }
-  .header h1 span {
-    color: var(--accent);
-    font-style: italic;
-  }
-  .header .subtitle {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    margin-top: 12px;
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
     font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
   }
+
+  /* Page wrapper */
+  .page {
+    max-width: 1000px;
+    margin: 40px auto;
+    background: #fff;
+    box-shadow: 0 8px 60px rgba(0,0,0,0.10);
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HEADER — full width */
+  .header {
+    grid-column: 1 / -1;
+    background: var(--dark);
+    color: var(--cream);
+    padding: 48px 52px 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,112,64,0.25);
+    pointer-events: none;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,112,64,0.15);
+    pointer-events: none;
+  }
+
+  .header-left { flex: 1; }
+
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  .name em {
+    font-style: italic;
+    color: var(--accent-light);
+  }
+
+  .title-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    border: 1px solid var(--accent);
+    padding: 5px 14px;
+    margin-bottom: 18px;
+  }
+
   .contacts {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    text-align: right;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-size: 12.5px;
+    color: rgba(245,240,232,0.65);
   }
-  .contacts a, .contacts span {
-    color: var(--text-muted);
+
+  .contacts a {
+    color: rgba(245,240,232,0.65);
     text-decoration: none;
-    font-size: 0.9rem;
-    font-family: 'JetBrains Mono', monospace;
-    transition: color 0.3s;
+    transition: color 0.2s;
   }
-  .contacts a:hover { color: var(--accent); }
+  .contacts a:hover { color: var(--accent-light); }
 
-  /* ---- SECTIONS ---- */
-  .section {
-    margin-bottom: 56px;
-    animation: fadeUp 0.8s ease-out both;
+  .contacts span { display: flex; align-items: center; gap: 6px; }
+  .contacts span::before { content: '·'; color: var(--accent); }
+  .contacts span:first-child::before { display: none; }
+
+  .years-badge {
+    text-align: right;
+    flex-shrink: 0;
   }
-  .section:nth-child(2) { animation-delay: 0.1s; }
-  .section:nth-child(3) { animation-delay: 0.2s; }
-  .section:nth-child(4) { animation-delay: 0.3s; }
-  .section:nth-child(5) { animation-delay: 0.4s; }
-  .section:nth-child(6) { animation-delay: 0.5s; }
-
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+  .years-badge .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    line-height: 1;
     color: var(--accent);
-    margin-bottom: 24px;
+    display: block;
+  }
+  .years-badge .label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--sidebar-bg);
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    border-right: 1px solid var(--line);
+  }
+
+  /* MAIN */
+  .main {
+    padding: 40px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
   .section-label::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--border);
+    background: var(--line);
   }
 
-  /* ---- ABOUT ---- */
+  /* About */
   .about-text {
-    font-size: 1.12rem;
-    color: var(--text-muted);
+    font-size: 13.5px;
+    color: var(--mid);
     line-height: 1.8;
-    max-width: 680px;
-    font-weight: 300;
-  }
-  .about-text strong {
-    color: var(--text);
-    font-weight: 500;
   }
 
-  /* ---- EXPERIENCE CARD ---- */
-  .exp-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-bottom: 16px;
-    transition: border-color 0.3s, transform 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .exp-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--accent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .exp-card:hover {
-    border-color: rgba(232,200,114,0.3);
-    transform: translateX(4px);
-  }
-  .exp-card:hover::before { opacity: 1; }
-  .exp-top {
+  /* Skills list */
+  .skills-list {
+    list-style: none;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 8px;
   }
-  .exp-role {
-    font-size: 1.15rem;
-    font-weight: 600;
+  .skills-list li {
+    font-size: 12.5px;
+    color: var(--mid);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
   }
-  .exp-company {
-    color: var(--accent2);
-    font-weight: 400;
-  }
-  .exp-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-  .exp-desc {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.7;
-    margin-top: 4px;
+  .skills-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
   }
 
-  /* ---- SKILLS GRID ---- */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-  }
-  .skill-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 20px;
-    font-size: 0.92rem;
-    font-weight: 500;
+  /* Tags */
+  .tags {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s;
-    cursor: default;
+    flex-wrap: wrap;
+    gap: 6px;
   }
-  .skill-item:hover {
-    background: var(--accent-dim);
-    border-color: rgba(232,200,114,0.25);
-    transform: translateY(-2px);
+  .tag {
+    font-size: 11px;
+    color: var(--mid);
+    background: rgba(184,112,64,0.10);
+    border: 1px solid rgba(184,112,64,0.25);
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.3px;
   }
-  .skill-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
+
+  /* Languages */
+  .lang-item {
+    margin-bottom: 10px;
+  }
+  .lang-name {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: var(--mid);
+  }
+  .lang-bar {
+    height: 2px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lang-fill {
+    height: 100%;
     background: var(--accent);
+    border-radius: 2px;
+    animation: fillBar 1s cubic-bezier(0.22,1,0.36,1) 0.6s both;
+    transform-origin: left;
+  }
+  @keyframes fillBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* Experience */
+  .job {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .job:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .job-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+
+  .period {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    margin-top: 3px;
     flex-shrink: 0;
   }
 
-  /* ---- EDUCATION ---- */
+  .position {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .job-desc {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .job-desc li {
+    font-size: 12.5px;
+    color: var(--mid);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .job-desc li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Education */
   .edu-item {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 20px;
-    align-items: start;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
   }
   .edu-year {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
     color: var(--accent);
-    background: var(--accent-dim);
-    padding: 6px 12px;
-    border-radius: 8px;
-    white-space: nowrap;
-    margin-top: 2px;
+    flex-shrink: 0;
+    width: 38px;
+    padding-top: 1px;
   }
-  .edu-info h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 2px;
+  .edu-title {
+    font-size: 12.5px;
+    color: var(--mid);
+    line-height: 1.5;
   }
-  .edu-info p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    font-weight: 300;
+  .edu-title strong {
+    display: block;
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 13px;
   }
 
-  /* ---- LANGUAGES ---- */
-  .lang-row {
+  /* Tools */
+  .tools-grid {
     display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
   }
-  .lang-chip {
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 10px 22px;
-    font-size: 0.88rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-  }
-  .lang-chip:hover {
-    border-color: var(--accent2);
-  }
-  .lang-level {
-    color: var(--text-muted);
-    font-size: 0.78rem;
-    font-family: 'JetBrains Mono', monospace;
+  .tool-row { }
+  .tool-cat {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
   }
 
-  /* ---- FOOTER ---- */
-  .footer {
-    text-align: center;
-    padding-top: 48px;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 0.82rem;
-    font-family: 'JetBrains Mono', monospace;
-    animation: fadeUp 0.8s ease-out 0.6s both;
+  /* Refs */
+  .ref-item {
+    margin-bottom: 10px;
+  }
+  .ref-name {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--dark);
+  }
+  .ref-role {
+    font-size: 11px;
+    color: var(--muted);
   }
 
-  /* ---- ANIMATIONS ---- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ---- RESPONSIVE ---- */
-  @media (max-width: 640px) {
-    .header { grid-template-columns: 1fr; gap: 20px; }
-    .contacts { text-align: left; }
-    .exp-top { flex-direction: column; gap: 4px; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .page { padding: 40px 20px 80px; }
-  }
-
-  /* ---- PRINT ---- */
+  /* Print */
   @media print {
-    body { background: #fff; color: #111; }
-    .glow, body::before { display: none; }
-    .exp-card { border: 1px solid #ddd; }
-    .section-label { color: #333; }
-    a { color: #333; }
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+
+  @media (max-width: 720px) {
+    .page { grid-template-columns: 1fr; }
+    .header { flex-direction: column; align-items: flex-start; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+    .name { font-size: 38px; }
   }
 </style>
 </head>
 <body>
-  <div class="glow"></div>
-  <div class="glow glow-2"></div>
 
-  <div class="page">
+<div class="page">
 
-    <!-- HEADER -->
-    <div class="header">
-      <div>
-        <h1>Liudmila<br><span>Tsvirko</span></h1>
-        <div class="subtitle">IT Recruiter · HR Professional</div>
-      </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="title-tag">HR Manager · People Operations · Talent Acquisition</div>
+      <h1 class="name">Людмила<br><em>Цвирко</em></h1>
       <div class="contacts">
-        <a href="mailto:filoveclv@gmail.com">filoveclv@gmail.com</a>
-        <a href="tel:+375292923438">+375 29 292 34 38</a>
-        <span>Minsk, Belarus</span>
-        <a href="https://www.linkedin.com/in/liudmila-tsvirko/" target="_blank">LinkedIn: Liudmila_Tsvirko</a>
+        <span>+375 29 292 3438 (tg)</span>
+        <span><a href="mailto:filoveclv@gmail.com">filoveclv@gmail.com</a></span>
+        <span><a href="#">LinkedIn</a></span>
+        <span>Беларусь</span>
+      </div>
+    </div>
+    <div class="years-badge">
+      <span class="num">5+</span>
+      <span class="label">лет опыта</span>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Ключевые компетенции -->
+    <div>
+      <div class="section-label">Компетенции</div>
+      <ul class="skills-list">
+        <li>Построение HR-функции с нуля (политики, процедуры, оргструктура)</li>
+        <li>Международный найм и работа с распределёнными командами</li>
+        <li>HR-метрики и KPI (найм, текучесть, вовлечённость)</li>
+        <li>Онбординг, перфоманс-ревью, exit-интервью</li>
+        <li>Вовлечённость, удержание и развитие сотрудников</li>
+        <li>Разработка ИПР и L&D-программ</li>
+        <li>Выбор и внедрение HR-систем, автоматизация</li>
+      </ul>
+    </div>
+
+    <!-- Инструменты -->
+    <div>
+      <div class="section-label">Инструменты</div>
+      <div class="tools-grid">
+        <div class="tool-row">
+          <div class="tool-cat">ATS / HR</div>
+          <div class="tags">
+            <span class="tag">CRM/ATS</span>
+            <span class="tag">Notion</span>
+            <span class="tag">Trello</span>
+            <span class="tag">Miro</span>
+          </div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-cat">Сорсинг</div>
+          <div class="tags">
+            <span class="tag">Boolean</span>
+            <span class="tag">X-Ray</span>
+            <span class="tag">GitHub</span>
+            <span class="tag">Stack Overflow</span>
+            <span class="tag">Kaggle</span>
+            <span class="tag">Behance</span>
+          </div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-cat">Продуктивность</div>
+          <div class="tags">
+            <span class="tag">Google Apps</span>
+            <span class="tag">MS Office</span>
+            <span class="tag">Canva</span>
+            <span class="tag">Figma</span>
+            <span class="tag">AI Tools</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ABOUT -->
-    <div class="section">
-      <div class="section-label">About</div>
+    <!-- Языки -->
+    <div>
+      <div class="section-label">Языки</div>
+      <div class="lang-item">
+        <div class="lang-name"><span>Русский</span><span>Native</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-name"><span>Английский</span><span>B1+</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:60%"></div></div>
+      </div>
+    </div>
+
+    <!-- Soft skills -->
+    <div>
+      <div class="section-label">Soft Skills</div>
+      <div class="tags">
+        <span class="tag">Коммуникация</span>
+        <span class="tag">Переговоры</span>
+        <span class="tag">Аналитика</span>
+        <span class="tag">Критическое мышление</span>
+        <span class="tag">Эмпатия</span>
+        <span class="tag">Самоорганизация</span>
+      </div>
+    </div>
+
+    <!-- Рекомендации -->
+    <div>
+      <div class="section-label">Рекомендации</div>
+      <div class="ref-item">
+        <div class="ref-name">Дмитрий Водянов</div>
+        <div class="ref-role">HRD, текущее место работы</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-name">Дарья Купченя</div>
+        <div class="ref-role">Лид, агентство Aimers</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-name">Елена Афанасьева</div>
+        <div class="ref-role">Административный директор, PSA</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- О себе -->
+    <div>
+      <div class="section-label">О себе</div>
       <p class="about-text">
-        Results-driven IT Recruiter and HR professional with <strong>5+ years of experience</strong> in full-cycle recruitment
-        for <strong>outsourced B2B software/hardware companies</strong>, <strong>game development</strong>, and <strong>iGaming</strong> industries.
-        Proven track record of closing technical and non-technical positions across all seniority levels.
-        Cross-cultural hiring experience spanning CIS countries, Poland, and the USA.
-        Skilled in sourcing strategies, HR operations, performance management, onboarding, and process automation.
+        HR-менеджер с более чем 5 годами опыта в полном цикле HR-операций — от найма до построения HR-функций с нуля. Работала в международных B2B и B2C tech-компаниях (аутсорс разработки ПО и аппаратного обеспечения, геймдев) с распределёнными командами в СНГ, Европе и США. Структурный человек, который умеет упорядочивать хаос. Люблю цифры, таблицы и аналитику. Преподаю в школе для рекрутеров, активно изучаю и применяю AI-инструменты.
       </p>
     </div>
 
-    <!-- EXPERIENCE -->
-    <div class="section">
-      <div class="section-label">Experience</div>
+    <!-- Опыт -->
+    <div>
+      <div class="section-label">Опыт работы</div>
 
-      <div class="exp-card">
-        <div class="exp-top">
-          <div class="exp-role">Sourcer / Recruiter / HR · <span class="exp-company">NDA (iGaming & GameDev)</span></div>
-          <div class="exp-date">Jun 2025 — Apr 2026</div>
+      <div class="job">
+        <div class="job-header">
+          <div class="company">NDA (High-Risk & GameDev)</div>
+          <div class="period">Июнь 2025 — Апрель 2026</div>
         </div>
-        <div class="exp-desc">
-          Sourced and recruited technical and non-technical talent for iGaming and game development projects.
-          Developed competitor matrices for iGaming and game dev markets.
-          Supported HR functions including performance management, onboarding & adaptation, and HR compliance.
-          Recruited for AI-focused positions.
-        </div>
+        <div class="position">Sourcer / Researcher / HR</div>
+        <ul class="job-desc">
+          <li>Полный цикл подбора технических и нетехнических специалистов (включая AI-направления), executive search: Senior, Lead, Advisers, Barraisers.</li>
+          <li>Поддержка HR-функций: управление эффективностью, онбординг, адаптация, HR compliance.</li>
+          <li>Построение карт конкурентов для оценки талантного рынка и рисков удержания.</li>
+          <li>Расчёт и предоставление HR-метрик; расширение профессионального нетворкинга в сегментах high-risk и GameDev.</li>
+          <li>Активное использование AI-инструментов в рабочем процессе и аналитике.</li>
+        </ul>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-top">
-          <div class="exp-role">IT Recruiter · <span class="exp-company">Aimers, Recruiting Agency</span></div>
-          <div class="exp-date">Jun 2024 — Apr 2025</div>
+      <div class="job">
+        <div class="job-header">
+          <div class="company">AIMERS — рекрутинговое агентство</div>
+          <div class="period">Июнь 2024 — Апрель 2025</div>
         </div>
-        <div class="exp-desc">
-          Managed full-cycle recruitment: sourcing, CV screening, interviewing, and feedback coordination.
-          Maintained and optimized ATS database for efficient candidate pipeline management.
-          Conducted labor market research and salary benchmarking.
-        </div>
+        <div class="position">IT-рекрутер</div>
+        <ul class="job-desc">
+          <li>Полный цикл подбора для международных клиентов; сорсинг на рынках СНГ и Европы.</li>
+          <li>Структурированные интервью и калибровочные сессии с хайринг-менеджерами.</li>
+          <li>Поддержка и оптимизация ATS-базы; сбор маркетинговых данных по зарплатам для консультаций клиентам.</li>
+          <li>Участие во внутренних инициативах по обмену знаниями.</li>
+        </ul>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-top">
-          <div class="exp-role">IT Recruiter / HR Generalist · <span class="exp-company">Professional Software Associates, Inc.</span></div>
-          <div class="exp-date">May 2021 — Jun 2024</div>
+      <div class="job">
+        <div class="job-header">
+          <div class="company">Professional Software Associates, Inc.</div>
+          <div class="period">Май 2021 — Июнь 2024</div>
         </div>
-        <div class="exp-desc">
-          End-to-end recruitment for technical and non-technical roles across seniority levels.
-          Led HR operations & compliance, created policies, procedures, and competency matrices.
-          Managed performance reviews, onboarding, exit interviews, and visa support.
-          Analyzed salary trends over 3 years; researched ATS solutions to automate recruitment.
-        </div>
+        <div class="position">HR & Recruitment Specialist</div>
+        <ul class="job-desc">
+          <li>Полный цикл найма технических и нетехнических ролей (Junior → C-level) в вертикалях ПО, hardware и SaaS; международный найм: СНГ, Польша, США.</li>
+          <li>Разработка и запуск программы онбординга; внедрение фреймворка перфоманс-ревью.</li>
+          <li>Участие в разработке HR-политик, регламентов и матрицы компетенций с нуля.</li>
+          <li>Проведение exit-интервью; анализ текучести и презентация выводов руководству.</li>
+          <li>Формирование базы зарплатных ожиданий за 3 года; построение карты конкурентов.</li>
+          <li>Руководство оценкой и выбором HR/ATS-систем; внутренние сессии Recruiting Knowledge Sharing.</li>
+        </ul>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-top">
-          <div class="exp-role">Recruitment Coach · <span class="exp-company">Shirkina School</span></div>
-          <div class="exp-date">Apr 2022 — Present</div>
+      <div class="job">
+        <div class="job-header">
+          <div class="company">Школа Ширкиной</div>
+          <div class="period">Апрель 2022 — наст. время</div>
         </div>
-        <div class="exp-desc">
-          Designed and delivered "Sourcing for Beginners" and "Giving Rejections" training courses.
-        </div>
+        <div class="position">Коуч / Преподаватель</div>
+        <ul class="job-desc">
+          <li>Разработка и ведение курса «Сорсинг для начинающих».</li>
+          <li>Курс «Отказы кандидатам»: лучшие практики коммуникации на всех этапах воронки.</li>
+        </ul>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-top">
-          <div class="exp-role">Sourcer (Part-Time) · <span class="exp-company">Celeritas, Recruiting Agency</span></div>
-          <div class="exp-date">Aug 2020 — Apr 2021</div>
+      <div class="job">
+        <div class="job-header">
+          <div class="company">CELERITAS — рекрутинговое агентство</div>
+          <div class="period">Авг 2020 — Апр 2021</div>
         </div>
-        <div class="exp-desc">
-          Sourced candidates, screened CVs, communicated with prospects, and gathered feedback.
-        </div>
+        <div class="position">Сорсер (частичная занятость)</div>
+        <ul class="job-desc">
+          <li>Скрининг CV, коммуникация с кандидатами, сбор обратной связи.</li>
+        </ul>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-top">
-          <div class="exp-role">Engineer · <span class="exp-company">STC Belmicrosystems</span></div>
-          <div class="exp-date">Jan 2012 — Apr 2021</div>
-        </div>
-        <div class="exp-desc">
-          Prepared reports and operational plans for division heads and the economics department.
-        </div>
-      </div>
     </div>
 
-    <!-- SKILLS -->
-    <div class="section">
-      <div class="section-label">Skills</div>
-      <div class="skills-grid">
-        <div class="skill-item"><span class="skill-dot"></span>Boolean & X-Ray Search</div>
-        <div class="skill-item"><span class="skill-dot"></span>LinkedIn Recruiter</div>
-        <div class="skill-item"><span class="skill-dot"></span>AI-powered Sourcing</div>
-        <div class="skill-item"><span class="skill-dot"></span>Full-cycle Recruitment</div>
-        <div class="skill-item"><span class="skill-dot"></span>Performance Management</div>
-        <div class="skill-item"><span class="skill-dot"></span>Onboarding & Adaptation</div>
-        <div class="skill-item"><span class="skill-dot"></span>HR Operations & Compliance</div>
-        <div class="skill-item"><span class="skill-dot"></span>CRM / ATS Systems</div>
-        <div class="skill-item"><span class="skill-dot"></span>Notion / Trello / Miro</div>
-        <div class="skill-item"><span class="skill-dot"></span>Figma / Canva</div>
-        <div class="skill-item"><span class="skill-dot"></span>ChatGPT / Claude</div>
-        <div class="skill-item"><span class="skill-dot"></span>Negotiation & Empathy</div>
-      </div>
-    </div>
-
-    <!-- EDUCATION -->
-    <div class="section">
-      <div class="section-label">Education & Certifications</div>
+    <!-- Образование -->
+    <div>
+      <div class="section-label">Образование и развитие</div>
       <div class="edu-item">
-        <span class="edu-year">2007 — 2012</span>
-        <div class="edu-info">
-          <h3>Bachelor's Degree in Economics</h3>
-          <p>Belarusian State Technological University</p>
-        </div>
+        <div class="edu-year">2026</div>
+        <div class="edu-title"><strong>Performance Review, 360-Feedback, Claude AI in HR</strong>Курс Майка Притулы</div>
       </div>
       <div class="edu-item">
-        <span class="edu-year">2023</span>
-        <div class="edu-info">
-          <h3>Advanced IT Sourcing</h3>
-          <p>Yauheniya Filipovich's Course</p>
-        </div>
+        <div class="edu-year">2025</div>
+        <div class="edu-title"><strong>HR Стратег</strong>Курс Елены Богдановой</div>
       </div>
       <div class="edu-item">
-        <span class="edu-year">2022</span>
-        <div class="edu-info">
-          <h3>Recruitment for Middle Specialists</h3>
-          <p>Shirkina School</p>
-        </div>
+        <div class="edu-year">2024</div>
+        <div class="edu-title"><strong>Нейро-курс для рекрутеров и HR</strong>Курс Кати Поконечной</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2023</div>
+        <div class="edu-title"><strong>Продвинутый IT-сорсинг</strong>Курс Евгении Филипович</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2022</div>
+        <div class="edu-title"><strong>Рекрутмент специалистов среднего уровня</strong>Школа Ширкиной</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-year">2012</div>
+        <div class="edu-title"><strong>Бакалавр экономики</strong>БГТУ — Белорусский государственный технологический университет</div>
       </div>
     </div>
 
-    <!-- LANGUAGES -->
-    <div class="section">
-      <div class="section-label">Languages</div>
-      <div class="lang-row">
-        <div class="lang-chip">Russian <span class="lang-level">· native</span></div>
-        <div class="lang-chip">English <span class="lang-level">· Intermediate+</span></div>
-      </div>
-    </div>
+  </main>
 
-    <!-- FOOTER -->
-    <div class="footer">
-      updated: april 2026
-    </div>
+</div>
 
-  </div>
 </body>
 </html>
